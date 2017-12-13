@@ -1,4 +1,4 @@
-package com.chatbot.api;
+package com.chatbot.api.model;
 
 /**
  * Created by MaximeRnR on 01/12/17.
