@@ -6,15 +6,12 @@ package com.chatbot.api.model;
 public class User {
     private String id;
     private String name;
-    private String avatarSrc;
 
     public User(){}
 
-
-    public User(String id, String name, String avatar) {
+    public User(String id, String name) {
         this.id = id;
         this.name = name;
-        this.avatarSrc = avatar;
     }
 
     public String getId() {
@@ -33,20 +30,11 @@ public class User {
         this.name = name;
     }
 
-    public String getAvatarSrc() {
-        return avatarSrc;
-    }
-
-    public void setAvatarSrc(String avatarSrc) {
-        this.avatarSrc = avatarSrc;
-    }
-
     @Override
     public String toString() {
         return "User{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", avatarSrc='" + avatarSrc + '\'' +
                 '}';
     }
 }
