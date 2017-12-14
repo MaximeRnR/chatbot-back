@@ -19,8 +19,7 @@ public class ChatBotService {
     public static final String PRIVATE_DIALOG_FLOW_TOKEN = "";
     private static final String HAJIME_ID = "hajime";
     private static final String HAJIME_NAME = "HajimeBot";
-    private static final String HAJIME_AVATAR = "assets/images/avatars/robot.png";
-    private static final User HAJIME_USER = new User(HAJIME_ID, HAJIME_NAME, HAJIME_AVATAR);
+    private static final User HAJIME_USER = new User(HAJIME_ID, HAJIME_NAME);
 
     private AIConfiguration configuration = new AIConfiguration(PRIVATE_DIALOG_FLOW_TOKEN);
 
@@ -34,16 +33,15 @@ public class ChatBotService {
             AIResponse response = dataService.request(request);
             if (response.getStatus().getCode() == 200) {
                 botResponse = response.getResult().getFulfillment().getSpeech();
-            } else {
-                botResponse = response.getStatus().getErrorDetails();
+                return new Message.MessageBuilder()
+                        .author(HAJIME_USER)
+                        .text(botResponse)
+                        .build();
             }
-            return new Message.MessageBuilder()
-                    .author(HAJIME_USER)
-                    .text(botResponse)
-                    .build();
+            throw new ChatBotException(response.getStatus().getErrorDetails());
 
         } catch (AIServiceException e) {
-            throw new ChatBotException("DialogFlow Not Responding", e);
+            throw new ChatBotException(e.getResponse().getStatus().getErrorDetails(), e);
         }
     }
 }
